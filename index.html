@@ -75,9 +75,9 @@
             font-size: 25px;
         }
 
-        /* Player X Won Styling */
-        .player-x-won {
-            color: #000;
+        /* Player X Turn Styling */
+        .player-x-turn {
+            font-weight: bold;
         }
 
         /* Reset Styling */
@@ -125,7 +125,7 @@
         </div>
     </div>
     <div class="result-container">
-        <p class="result">Current Player's Turn: X</p>
+        <p class="result">Player X Turn</p>
     </div>
     <div class="reset">
         <button class="reset-btn" onclick="resetGame()" disabled>Reset</button>
@@ -158,7 +158,7 @@
                 if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
                     gameActive = false;
                     resultContainer.textContent = `Player ${gameBoard[a]} Won 🎉`;
-                    resultContainer.classList.add('player-x-won');
+                    resultContainer.classList.add('player-x-turn');
                     resetButton.disabled = false;
                 }
             }
@@ -175,8 +175,8 @@
                 gameBoard[index] = currentPlayer;
                 buttons[index].textContent = currentPlayer;
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                resultContainer.textContent = `Current Player's Turn: ${currentPlayer}`;
-                resultContainer.classList.remove('player-x-won');
+                resultContainer.textContent = `Player ${currentPlayer} Turn`;
+                resultContainer.classList.remove('player-x-turn');
                 checkWinner();
             }
         }
@@ -185,12 +185,12 @@
             currentPlayer = 'X';
             gameBoard = Array(9).fill('');
             gameActive = true;
-            resultContainer.textContent = "Current Player's Turn: X";
+            resultContainer.textContent = "Player X Turn";
             buttons.forEach(button => {
                 button.textContent = '';
             });
             resetButton.disabled = true;
-            resultContainer.classList.remove('player-x-won');
+            resultContainer.classList.remove('player-x-turn');
         }
     </script>
 </body>
