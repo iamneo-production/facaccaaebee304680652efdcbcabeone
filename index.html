@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,7 +98,6 @@
         }
     </style>
 </head>
-
 <body>
     <header>
         <h1>Tic Tac Toe</h1>
@@ -123,7 +121,7 @@
         </div>
     </div>
     <div class="result-container">
-        <p class="result">Current Player's Turn</p>
+        <p class="result">Current Player's Turn: X</p>
     </div>
     <div class="reset">
         <button class="reset-btn" onclick="resetGame()" disabled>Reset</button>
@@ -132,44 +130,46 @@
     <script>
         // JavaScript logic for the Tic Tac Toe game goes here
         let currentPlayer = 'X';
-        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+        let gameBoard = Array(9).fill('');
         let gameActive = true;
 
         const resultContainer = document.querySelector('.result');
         const resetButton = document.querySelector('.reset-btn');
+        const buttons = document.querySelectorAll('.btn');
 
         function checkWinner() {
-            const winningCombos = [
-                [0, 1, 2],
-                [3, 4, 5],
-                [6, 7, 8],
-                [0, 3, 6],
-                [1, 4, 7],
-                [2, 5, 8],
-                [0, 4, 8],
-                [2, 4, 6]
-            ];
+    const winningCombos = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
 
-            for (let combo of winningCombos) {
-                const [a, b, c] = combo;
-                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
-                    gameActive = false;
-                    resultContainer.textContent = `${currentPlayer} wins 🎉`;
-                    resetButton.disabled = false;
-                }
-            }
-
-            if (!gameBoard.includes('') && gameActive) {
-                gameActive = false;
-                resultContainer.textContent = "It's a draw!";
-                resetButton.disabled = false;
-            }
+    for (let combo of winningCombos) {
+        const [a, b, c] = combo;
+        if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+            gameActive = false;
+            resultContainer.textContent = `${gameBoard[a]} wins!`;
+            resetButton.disabled = false;
         }
+    }
+
+    if (!gameBoard.includes('') && gameActive) {
+        gameActive = false;
+        resultContainer.textContent = "It's a draw!";
+        resetButton.disabled = false;
+    }
+}
+
 
         function makeMove(index) {
             if (gameBoard[index] === '' && gameActive) {
                 gameBoard[index] = currentPlayer;
-                document.querySelectorAll('.btn')[index].textContent = currentPlayer;
+                buttons[index].textContent = currentPlayer;
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 resultContainer.textContent = `Current Player's Turn: ${currentPlayer}`;
                 checkWinner();
@@ -178,15 +178,14 @@
 
         function resetGame() {
             currentPlayer = 'X';
-            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            gameBoard = Array(9).fill('');
             gameActive = true;
             resultContainer.textContent = "Current Player's Turn: X";
-            document.querySelectorAll('.btn').forEach(button => {
+            buttons.forEach(button => {
                 button.textContent = '';
             });
             resetButton.disabled = true;
         }
     </script>
 </body>
-
 </html>
