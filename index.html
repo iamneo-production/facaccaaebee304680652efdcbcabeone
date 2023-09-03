@@ -71,9 +71,13 @@
         /* Result Styling */
         .result {
             text-align: center;
-            color: #ffffff;
             text-shadow: 1px 1px 2px #ccc;
             font-size: 25px;
+        }
+
+        /* Player X Won Styling */
+        .player-x-won {
+            color: #000;
         }
 
         /* Reset Styling */
@@ -138,33 +142,33 @@
         const buttons = document.querySelectorAll('.btn');
 
         function checkWinner() {
-    const winningCombos = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
+            const winningCombos = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
 
-    for (let combo of winningCombos) {
-        const [a, b, c] = combo;
-        if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
-            gameActive = false;
-            resultContainer.textContent = `${gameBoard[a]} wins!`;
-            resetButton.disabled = false;
+            for (let combo of winningCombos) {
+                const [a, b, c] = combo;
+                if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
+                    gameActive = false;
+                    resultContainer.textContent = `Player ${gameBoard[a]} Won 🎉`;
+                    resultContainer.classList.add('player-x-won');
+                    resetButton.disabled = false;
+                }
+            }
+
+            if (!gameBoard.includes('') && gameActive) {
+                gameActive = false;
+                resultContainer.textContent = "It's a draw!";
+                resetButton.disabled = false;
+            }
         }
-    }
-
-    if (!gameBoard.includes('') && gameActive) {
-        gameActive = false;
-        resultContainer.textContent = "It's a draw!";
-        resetButton.disabled = false;
-    }
-}
-
 
         function makeMove(index) {
             if (gameBoard[index] === '' && gameActive) {
@@ -172,6 +176,7 @@
                 buttons[index].textContent = currentPlayer;
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 resultContainer.textContent = `Current Player's Turn: ${currentPlayer}`;
+                resultContainer.classList.remove('player-x-won');
                 checkWinner();
             }
         }
@@ -185,6 +190,7 @@
                 button.textContent = '';
             });
             resetButton.disabled = true;
+            resultContainer.classList.remove('player-x-won');
         }
     </script>
 </body>
